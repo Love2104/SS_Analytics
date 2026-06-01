@@ -212,7 +212,8 @@ export function useMarketData() {
   useEffect(() => {
     setLoading(true);
     // Try real API first, fall back to mock
-    fetch("/api/metrics", { cache: "no-store" })
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    fetch(`${baseUrl}/api/metrics`, { cache: "no-store" })
       .then((r) => {
         if (!r.ok) throw new Error("API unavailable");
         return r.json() as Promise<InsightsResponse>;
