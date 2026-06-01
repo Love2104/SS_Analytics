@@ -62,8 +62,9 @@ Spring Street emphasizes **Data Storytelling** — moving beyond static charts t
 * **Benchmark Comparison**: Assess portfolio performance against historical baselines.
 
 ### ⚡ Interactive Experience
+* **Premium Mobile UX**: A dedicated mobile experience featuring a locked backdrop navigation drawer, sticky bottom navigation bars, and 44px optimized touch targets, breaking away from the typical squished desktop-responsive layouts.
 * **Dark / Light Mode**: Sleek, tailored themes with terminal-inspired dark modes and sharp, high-contrast typography.
-* **Responsive Design**: Fully fluid grid systems and scalable SVGs.
+* **Responsive Design**: Fully fluid grid systems, scalable SVGs, and horizontal scroll wrappers for dense charts on ultra-narrow displays.
 * **Interactive Charts**: Custom tooltips, precise crosshairs, and dynamic timeline slicing via Recharts.
 * **Advanced Filtering**: Toggle between dynamic asset charts (Candlestick vs. Area Line).
 * **Global Search & Command Palette**: Instant keyboard-driven navigation (`Cmd + K`) to seamlessly jump between assets and views.
@@ -229,11 +230,17 @@ Spring Street rejects generic dashboard templates. The UI/UX philosophy is stric
 * **Data Storytelling:** Charts don't just show lines; adjacent "Insight Panels" dynamically explain *why* the line matters.
 * **Distinct Asset Identity:** AAPL isn't just "blue"—it has a dedicated silver-white brand profile that persists across tooltips, glowing borders, and pie slices.
 
-## PERFORMANCE OPTIMIZATIONS
+## PERFORMANCE & RELIABILITY OPTIMIZATIONS
 ==================================================
+* **Thread-Safe In-Memory Caching (Go):** A custom caching layer using `sync.RWMutex` with a 4-hour TTL protects the backend from Yahoo Finance rate limits and drops latency to 0ms for repeated requests.
+* **Concurrency (Go):** Utilizes Go's `sync.WaitGroup` to fetch 5 years of historical data for all 5 portfolio tickers simultaneously, drastically reducing initial load time.
 * **Deterministic Derivation:** Bypassed heavy API requests by mathematically deriving historic Candlestick OHLC paths locally using standard deviation models and real API baselines.
 * **Memoization:** Extensive use of `useMemo` for derived analytics to prevent expensive array slicing and mapping on every React render.
 * **SVG Optimization:** Custom, lightweight SVG implementations for the Candlestick charts limit DOM node bloat compared to heavy canvas alternatives.
+
+## ENGINEERING & TESTING
+==================================================
+* **Table-Driven Unit Tests:** Complex financial mathematics (Sharpe Ratio, Maximum Drawdown, Compound Returns) are strictly validated using Go's `testing` package (`analytics_test.go`) to guarantee institutional-grade accuracy.
 
 ## SCREENSHOTS
 ==================================================
