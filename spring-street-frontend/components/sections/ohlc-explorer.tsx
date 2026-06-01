@@ -193,7 +193,7 @@ export function OHLCExplorer() {
 
         {/* Price stats */}
         {latest && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(5, minmax(0, 1fr))", gap: 12, padding: "16px 20px", borderBottom: "1px solid var(--border-subtle)" }}>
+          <div className="grid-5-col" style={{ padding: "16px 20px", borderBottom: "1px solid var(--border-subtle)" }}>
             <PriceStatItem label="Current" value={currency(latest.close)} />
             <PriceStatItem label="Open" value={currency(latest.open)} />
             <PriceStatItem label="High" value={currency(latest.high)} color="var(--accent-green)" />

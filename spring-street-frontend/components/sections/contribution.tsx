@@ -105,7 +105,7 @@ export function Contribution({ analytics }: ContributionProps) {
     <section className="section" aria-label="Asset contribution analysis">
       <SectionHeader eyebrow="02 · Attribution" title="Where portfolio value is concentrated" />
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1.1fr 1fr", gap: 16 }}>
+      <div className="grid-1-to-3">
         {/* Donut chart */}
         <motion.div
           className="card card-pad"

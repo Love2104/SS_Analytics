@@ -139,7 +139,7 @@ export function InsightsMode({ data, analytics }: InsightsModeProps) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 16 }}>
+      <div className="two-col-grid">
         <motion.div
           className="card card-pad"
           initial={{ opacity: 0, y: 16 }}

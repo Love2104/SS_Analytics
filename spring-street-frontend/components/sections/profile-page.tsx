@@ -61,7 +61,7 @@ export function ProfilePage({ data }: { data: InsightsResponse }) {
       </div>
 
       {/* Stats Row */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 16, marginBottom: 48 }}>
+      <div className="grid-1-to-4" style={{ marginBottom: 48 }}>
         {[
           { l: "Portfolios Tracked", v: "1" },
           { l: "Total Assets", v: "5" },

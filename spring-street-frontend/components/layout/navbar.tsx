@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Search, Bell, Sun, Moon, Monitor, RefreshCw, ChevronDown } from "lucide-react";
+import { Search, Bell, Sun, Moon, Monitor, RefreshCw, ChevronDown, Menu } from "lucide-react";
 import { useTheme } from "@/components/providers/theme-provider";
 
 function isMarketOpen(): boolean {
@@ -121,9 +121,10 @@ interface NavbarProps {
   onSearchOpen: () => void;
   lastUpdated: string | null;
   onNavigate: (section: string) => void;
+  onMenuClick?: () => void;
 }
 
-export function Navbar({ sidebarCollapsed, onSearchOpen, lastUpdated, onNavigate }: NavbarProps) {
+export function Navbar({ sidebarCollapsed, onSearchOpen, lastUpdated, onNavigate, onMenuClick }: NavbarProps) {
   const open = isMarketOpen();
   const [now, setNow] = useState("");
   const [notifOpen, setNotifOpen] = useState(false);
@@ -140,6 +141,15 @@ export function Navbar({ sidebarCollapsed, onSearchOpen, lastUpdated, onNavigate
 
   return (
     <header className={`navbar${sidebarCollapsed ? " sidebar-collapsed" : ""}`} role="banner">
+      {/* Mobile Menu Button */}
+      <button 
+        className="navbar-icon-btn mobile-menu-btn" 
+        onClick={onMenuClick}
+        aria-label="Open menu"
+      >
+        <Menu size={18} />
+      </button>
+
       {/* Market Status */}
       <div className="market-status" aria-label={open ? "Market open" : "Market closed"}>
         <div className={`market-status-dot${open ? "" : " closed"}`} />

@@ -155,11 +155,10 @@ export function RiskAnalytics({ data, analytics }: RiskAnalyticsProps) {
     <section className="section" aria-label="Risk analytics">
       <SectionHeader eyebrow="04 · Risk" title="Risk quality and downside characteristics" />
 
-      <div style={{ display: "grid", gridTemplateColumns: "340px minmax(0, 1fr)", gap: 16, alignItems: "start" }}>
+      <div className="grid-sidebar">
         {/* Gauge */}
         <motion.div
-          className="card card-pad"
-          style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}
+          className="card card-pad card--centered"
           initial={{ opacity: 0, scale: 0.96 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}

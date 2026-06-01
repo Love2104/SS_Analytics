@@ -25,7 +25,7 @@ export function ReportsPage({ data, analytics }: { data: InsightsResponse, analy
         <p style={{ color: "var(--text-secondary)", marginTop: 8 }}>Automated performance and risk analysis.</p>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(340px, 1fr))", gap: 24 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 24 }}>
         
         {/* Performance Report */}
         <div className="card card-pad" style={{ display: "flex", flexDirection: "column" }}>

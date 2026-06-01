@@ -20,11 +20,12 @@ interface SidebarProps {
   activeSection: string;
   onNavigate: (section: string) => void;
   onCollapse?: (collapsed: boolean) => void;
+  mobileOpen?: boolean;
+  onCloseMobile?: () => void;
 }
 
-export function Sidebar({ activeSection, onNavigate, onCollapse }: SidebarProps) {
+export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = false, onCloseMobile }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
-  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("sidebar-collapsed");
@@ -48,10 +49,11 @@ export function Sidebar({ activeSection, onNavigate, onCollapse }: SidebarProps)
         {mobileOpen && (
           <motion.div
             className="fixed inset-0 z-150 bg-black/60 backdrop-blur-sm md:hidden"
+            style={{ zIndex: 150 }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            onClick={() => setMobileOpen(false)}
+            onClick={() => onCloseMobile?.()}
           />
         )}
       </AnimatePresence>

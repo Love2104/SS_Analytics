@@ -85,7 +85,7 @@ export function PortfolioGrowth({ analytics, insight, timeframe, setTimeframe }:
         }
       />
 
-      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.85fr) minmax(280px, 0.65fr)", gap: 16, alignItems: "start" }}>
+      <div className="chart-grid-layout">
         {/* Main chart */}
         <motion.div
           className="card card-pad"

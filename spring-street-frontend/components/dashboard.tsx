@@ -58,6 +58,7 @@ function ErrorState({ message, onRetry }: { message: string; onRetry: () => void
 function DashboardContent() {
   const { data, loading, error, timeframe, setTimeframe } = useMarketData();
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [cmdOpen, setCmdOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("dashboard");
   const [activeCompany, setActiveCompany] = useState<string | null>(null);
@@ -86,6 +87,7 @@ function DashboardContent() {
   const insight = data && analytics ? makeInsight(data, analytics) : null;
 
   const handleNavigate = (target: string) => {
+    setMobileSidebarOpen(false); // Close sidebar on mobile navigation
     if (target.startsWith("company-")) {
       setActiveCompany(target.split("-")[1]);
       setActiveSection("company");
@@ -105,6 +107,8 @@ function DashboardContent() {
         activeSection={activeSection}
         onNavigate={handleNavigate}
         onCollapse={setSidebarCollapsed}
+        mobileOpen={mobileSidebarOpen}
+        onCloseMobile={() => setMobileSidebarOpen(false)}
       />
 
       <div className={`main-area${sidebarCollapsed ? " sidebar-collapsed" : ""}`}>
@@ -113,6 +117,7 @@ function DashboardContent() {
           onSearchOpen={() => setCmdOpen(true)}
           lastUpdated={data?.generated_at ?? null}
           onNavigate={handleNavigate}
+          onMenuClick={() => setMobileSidebarOpen(true)}
         />
 
         <main className="page-content" id="main-content" tabIndex={-1}>
@@ -184,7 +189,7 @@ function DashboardContent() {
                 </div>
 
                 {/* Watchlist + Activity sidebar row */}
-                <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: 16, marginTop: 48 }}>
+                <div className="two-col-grid" style={{ marginTop: 48 }}>
                   <WatchlistPanel />
                   <ActivityFeed />
                 </div>
