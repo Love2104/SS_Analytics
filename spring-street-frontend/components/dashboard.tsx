@@ -108,6 +108,7 @@ function DashboardContent() {
       <Sidebar
         activeSection={activeSection}
         onNavigate={handleNavigate}
+        onSearchOpen={() => setCmdOpen(true)}
         onCollapse={setSidebarCollapsed}
         mobileOpen={mobileSidebarOpen}
         onCloseMobile={() => setMobileSidebarOpen(false)}

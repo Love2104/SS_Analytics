@@ -4,10 +4,11 @@ import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, PieChart, FileText, Activity,
-  Settings, User, ChevronLeft, ChevronRight
+  Settings, User, ChevronLeft, ChevronRight, Search
 } from "lucide-react";
 
 const NAV_ITEMS = [
+  { id: "search", label: "Search", icon: Search, section: null },
   { id: "dashboard", label: "Dashboard", icon: LayoutDashboard, section: null },
   { id: "portfolio", label: "Portfolio", icon: PieChart, section: null },
   { id: "reports", label: "Reports", icon: FileText, section: null },
@@ -19,12 +20,13 @@ const NAV_ITEMS = [
 interface SidebarProps {
   activeSection: string;
   onNavigate: (section: string) => void;
+  onSearchOpen?: () => void;
   onCollapse?: (collapsed: boolean) => void;
   mobileOpen?: boolean;
   onCloseMobile?: () => void;
 }
 
-export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = false, onCloseMobile }: SidebarProps) {
+export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, mobileOpen = false, onCloseMobile }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
@@ -51,6 +53,8 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
   const mainItems = NAV_ITEMS.filter((i) => !i.section);
   const moreItems = NAV_ITEMS.filter((i) => i.section === "more");
 
+  const isVisuallyCollapsed = collapsed && !mobileOpen;
+
   return (
     <>
       {/* Mobile overlay */}
@@ -67,14 +71,14 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
       </AnimatePresence>
 
       <motion.aside
-        className={`sidebar${collapsed ? " collapsed" : ""}${mobileOpen ? " mobile-open" : ""}`}
-        style={{ width: mobileOpen ? "280px" : (collapsed ? "var(--sidebar-collapsed-w)" : "var(--sidebar-w)") }}
-        animate={{ width: mobileOpen ? 280 : (collapsed ? 64 : 240) }}
+        className={`sidebar${isVisuallyCollapsed ? " collapsed" : ""}${mobileOpen ? " mobile-open" : ""}`}
+        style={{ width: mobileOpen ? "280px" : (isVisuallyCollapsed ? "var(--sidebar-collapsed-w)" : "var(--sidebar-w)") }}
+        animate={{ width: mobileOpen ? 280 : (isVisuallyCollapsed ? 64 : 240) }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Logo */}
-        <div className="sidebar-logo">
-          <div className="sidebar-logo-icon" aria-label="Spring Street logo">
+        <div className="flex items-center gap-3 h-16 px-4 border-b border-[rgba(127,86,217,0.08)] shrink-0">
+          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[#7F56D9]">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
               <path d="M9 2L15.5 6V12L9 16L2.5 12V6L9 2Z" stroke="white" strokeWidth="1.5" fill="none" />
               <path d="M9 5L13 7.5V12.5L9 15L5 12.5V7.5L9 5Z" fill="white" fillOpacity="0.3" />
@@ -82,9 +86,10 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
             </svg>
           </div>
           <motion.span
-            className="sidebar-logo-text"
-            animate={{ opacity: collapsed ? 0 : 1 }}
+            className="text-[15px] font-semibold text-[#101828] whitespace-nowrap tracking-tight"
+            animate={{ opacity: isVisuallyCollapsed ? 0 : 1, width: isVisuallyCollapsed ? 0 : "auto" }}
             transition={{ duration: 0.15 }}
+            style={{ overflow: 'hidden' }}
           >
             Spring Street
           </motion.span>
@@ -109,7 +114,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
         <nav className="sidebar-nav" aria-label="Main navigation">
           <motion.div
             className="sidebar-section-title"
-            animate={{ opacity: collapsed ? 0 : 1 }}
+            animate={{ opacity: isVisuallyCollapsed ? 0 : 1 }}
             transition={{ duration: 0.15 }}
           >
             Workspace
@@ -121,8 +126,15 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
             return (
               <button
                 key={item.id}
-                onClick={() => onNavigate(item.id)}
-                title={collapsed ? item.label : undefined}
+                onClick={() => {
+                  if (item.id === "search") {
+                    onSearchOpen?.();
+                    if (mobileOpen) onCloseMobile?.();
+                  } else {
+                    onNavigate(item.id);
+                  }
+                }}
+                title={isVisuallyCollapsed ? item.label : undefined}
                 aria-label={item.label}
                 aria-current={isActive ? "page" : undefined}
                 style={{
@@ -161,7 +173,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
                 <Icon size={16} strokeWidth={isActive ? 2.2 : 1.8} />
                 <motion.span
                   className="sidebar-nav-label"
-                  animate={{ opacity: collapsed ? 0 : 1, width: collapsed ? 0 : "auto" }}
+                  animate={{ opacity: isVisuallyCollapsed ? 0 : 1, width: isVisuallyCollapsed ? 0 : "auto" }}
                   transition={{ duration: 0.15 }}
                 >
                   {item.label}
@@ -172,7 +184,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
 
           <motion.div
             className="sidebar-section-title"
-            animate={{ opacity: collapsed ? 0 : 1 }}
+            animate={{ opacity: isVisuallyCollapsed ? 0 : 1 }}
             transition={{ duration: 0.15 }}
             style={{ marginTop: 8 }}
           >
@@ -186,7 +198,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
               <button
                 key={item.id}
                 onClick={() => onNavigate(item.id)}
-                title={collapsed ? item.label : undefined}
+                title={isVisuallyCollapsed ? item.label : undefined}
                 aria-label={item.label}
                 style={{
                   display: "flex",
@@ -224,7 +236,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
                 <Icon size={16} strokeWidth={isActive ? 2.2 : 1.8} />
                 <motion.span
                   className="sidebar-nav-label"
-                  animate={{ opacity: collapsed ? 0 : 1, width: collapsed ? 0 : "auto" }}
+                  animate={{ opacity: isVisuallyCollapsed ? 0 : 1, width: isVisuallyCollapsed ? 0 : "auto" }}
                   transition={{ duration: 0.15 }}
                 >
                   {item.label}
@@ -239,12 +251,12 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
           <button
             className="sidebar-collapse-btn"
             onClick={toggle}
-            aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
-            title={collapsed ? "Expand" : "Collapse"}
+            aria-label={isVisuallyCollapsed ? "Expand sidebar" : "Collapse sidebar"}
+            title={isVisuallyCollapsed ? "Expand" : "Collapse"}
           >
-            {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
+            {isVisuallyCollapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
             <motion.span
-              animate={{ opacity: collapsed ? 0 : 1 }}
+              animate={{ opacity: isVisuallyCollapsed ? 0 : 1 }}
               transition={{ duration: 0.15 }}
               style={{ fontSize: 12 }}
             >
