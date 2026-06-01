@@ -6,7 +6,7 @@ export const COMPANY_COLORS: Record<string, string> = {
   AMZN: "#FF9900",
 };
 
-export const DEFAULT_ACCENT = "#00d4ff";
+export const DEFAULT_ACCENT = "#7F56D9";
 
 export function getCompanyColor(ticker: string): string {
   return COMPANY_COLORS[ticker] || DEFAULT_ACCENT;

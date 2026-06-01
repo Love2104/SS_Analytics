@@ -132,9 +132,9 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
                   height: 36,
                   padding: "0 12px",
                   margin: "0 12px 4px 12px",
-                  backgroundColor: isActive ? "rgba(255, 255, 255, 0.08)" : "transparent",
-                  color: isActive ? "#FFFFFF" : "var(--text-secondary)",
-                  borderRadius: 6,
+                  backgroundColor: isActive ? "rgba(127,86,217,0.08)" : "transparent",
+                  color: isActive ? "#7F56D9" : "var(--text-secondary)",
+                  borderRadius: 8,
                   fontSize: 13.5,
                   fontWeight: isActive ? 500 : 400,
                   whiteSpace: "nowrap",
@@ -147,8 +147,8 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
                 }}
                 onMouseOver={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.04)";
-                    e.currentTarget.style.color = "#E6EDF3";
+                    e.currentTarget.style.backgroundColor = "rgba(127,86,217,0.04)";
+                    e.currentTarget.style.color = "#101828";
                   }
                 }}
                 onMouseOut={(e) => {
@@ -210,8 +210,8 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
                 }}
                 onMouseOver={(e) => {
                   if (!isActive) {
-                    e.currentTarget.style.backgroundColor = "rgba(255, 255, 255, 0.04)";
-                    e.currentTarget.style.color = "#E6EDF3";
+                    e.currentTarget.style.backgroundColor = "rgba(127,86,217,0.04)";
+                    e.currentTarget.style.color = "#101828";
                   }
                 }}
                 onMouseOut={(e) => {

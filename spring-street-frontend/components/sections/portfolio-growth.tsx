@@ -100,7 +100,7 @@ export function PortfolioGrowth({ analytics, insight, timeframe, setTimeframe }:
               <div className="chart-title">Portfolio Value Over Time</div>
               <div className="chart-subtitle">Rebased to initial investment capital</div>
             </div>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--accent-green)", fontFamily: "var(--font-mono)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 12, color: "var(--accent-primary)", fontFamily: "var(--font-mono)" }}>
               <TrendingUp size={14} />
               All-time tracking
             </div>
@@ -112,8 +112,8 @@ export function PortfolioGrowth({ analytics, insight, timeframe, setTimeframe }:
                 <AreaChart data={analytics.growth} margin={{ top: 10, right: 8, bottom: 0, left: 8 }}>
                   <defs>
                     <linearGradient id="portfolioGradient" x1="0" x2="0" y1="0" y2="1">
-                      <stop offset="0%" stopColor="#00d4ff" stopOpacity={0.22} />
-                      <stop offset="100%" stopColor="#00d4ff" stopOpacity={0} />
+                      <stop offset="0%" stopColor="#7F56D9" stopOpacity={0.18} />
+                      <stop offset="100%" stopColor="#7F56D9" stopOpacity={0} />
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
@@ -136,22 +136,22 @@ export function PortfolioGrowth({ analytics, insight, timeframe, setTimeframe }:
                   <Area
                     dataKey="portfolio"
                     name="Portfolio"
-                    stroke="#00d4ff"
+                    stroke="#7F56D9"
                     strokeWidth={2.5}
                     fill="url(#portfolioGradient)"
                     dot={false}
-                    activeDot={{ r: 5, fill: "#00d4ff", stroke: "#000", strokeWidth: 2 }}
+                    activeDot={{ r: 5, fill: "#7F56D9", stroke: "#fff", strokeWidth: 2 }}
                     animationDuration={900}
                   />
                   <Area
                     dataKey="baseline"
                     name="Initial Capital"
-                    stroke="#f59e0b"
+                    stroke="#98A2B3"
                     strokeWidth={1.5}
                     strokeDasharray="6 4"
                     fill="transparent"
                     dot={false}
-                    activeDot={{ r: 4, fill: "#f59e0b", stroke: "var(--bg-base)", strokeWidth: 2 }}
+                    activeDot={{ r: 4, fill: "#98A2B3", stroke: "#fff", strokeWidth: 2 }}
                   />
                 </AreaChart>
               </ResponsiveContainer>
