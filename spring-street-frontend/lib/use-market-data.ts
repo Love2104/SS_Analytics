@@ -212,7 +212,7 @@ export function useMarketData() {
   useEffect(() => {
     setLoading(true);
     // Try real API first, fall back to mock
-    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8080";
     fetch(`${baseUrl}/api/metrics`, { cache: "no-store" })
       .then((r) => {
         if (!r.ok) throw new Error("API unavailable");
