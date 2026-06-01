@@ -509,8 +509,17 @@ img, svg { display: block; }
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  transition: width 280ms var(--ease-out);
+  transition: width 280ms var(--ease-out), transform 280ms var(--ease-out);
   overflow: hidden;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar.mobile-open {
+    transform: translateX(0);
+  }
 }
 
 .sidebar.collapsed {
@@ -596,6 +605,15 @@ img, svg { display: block; }
 .sidebar-nav-label {
   opacity: 1;
   transition: opacity 200ms ease;
+}
+
+.backdrop-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 150;
+  background: rgba(16, 24, 40, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .sidebar.collapsed .sidebar-nav-label { opacity: 0; }
