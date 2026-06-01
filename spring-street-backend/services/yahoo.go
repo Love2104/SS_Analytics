@@ -49,10 +49,16 @@ func FetchOHLC(ticker string, years int) ([]models.OHLCBar, error) {
 		return nil, fmt.Errorf("years must be positive")
 	}
 
+	cacheKey := fmt.Sprintf("%s-%d", symbol, years)
+	if cached := globalCache.Get(cacheKey); cached != nil {
+		return cached, nil
+	}
+
 	var lastErr error
 	for attempt := 1; attempt <= yahooFetchAttempts; attempt++ {
 		bars, err := fetchOHLCOnce(symbol, years)
 		if err == nil {
+			globalCache.Set(cacheKey, bars, 4*time.Hour)
 			return bars, nil
 		}
 		lastErr = err
