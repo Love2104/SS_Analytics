@@ -1,0 +1,32 @@
+# dependencies
+/spring-street-frontend/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/spring-street-frontend/.next
+/spring-street-frontend/.next-app
+/spring-street-frontend/out
+
+# production
+/spring-street-frontend/build
+
+# misc
+.DS_Store
+*.pem
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Go
+/spring-street-backend/*.exe
+/spring-street-backend/*.log

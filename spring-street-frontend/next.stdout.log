@@ -1,0 +1,48 @@
+
+> spring-street-frontend@1.0.0 dev
+> next dev -p 3000
+
+  ▲ Next.js 14.2.35
+  - Local:        http://localhost:3000
+
+ ✓ Starting...
+ ✓ Ready in 2.1s
+ ○ Compiling / ...
+ ✓ Compiled / in 2.7s (510 modules)
+ GET / 200 in 3094ms
+ GET / 200 in 62ms
+ GET / 200 in 74ms
+ GET / 200 in 54ms
+   ▲ Next.js 15.5.18
+   - Local:        http://localhost:3000
+   - Network:      http://172.23.146.73:3000
+
+ ✓ Starting...
+
+   We detected TypeScript in your project and reconfigured your tsconfig.json file for you.
+   The following suggested values were added to your tsconfig.json. These values can be changed to fit your project's needs:
+
+   	- include was updated to add '.next-app/types/**/*.ts'
+
+ ✓ Ready in 3.5s
+ ○ Compiling / ...
+ ✓ Compiled /_error in 6.4s (2749 modules)
+ GET / 500 in 24803ms
+ GET / 500 in 231ms
+ ✓ Compiled in 2.9s (1306 modules)
+ GET / 500 in 496ms
+ GET / 500 in 247ms
+ ○ Compiling /_not-found ...
+ ✓ Compiled /_not-found in 1780ms (2659 modules)
+ GET / 404 in 2755ms
+ ✓ Compiled in 4.3s (1413 modules)
+ ✓ Compiled in 2.3s (1319 modules)
+ ✓ Compiled in 2.2s (1305 modules)
+ ✓ Compiled in 1682ms (1305 modules)
+ ✓ Compiled in 1440ms (1356 modules)
+ ✓ Compiled in 511ms (1356 modules)
+ ✓ Compiled in 969ms (1356 modules)
+ ✓ Compiled in 418ms (1356 modules)
+ ✓ Compiled in 351ms (1356 modules)
+ ✓ Compiled in 335ms (1356 modules)
+[?25h
