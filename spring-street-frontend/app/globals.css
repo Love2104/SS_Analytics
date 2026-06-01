@@ -322,7 +322,8 @@ img, svg { display: block; }
 }
 
 @media (max-width: 768px) {
-  .navbar { 
+  .navbar,
+  .navbar.sidebar-collapsed { 
     left: 0; 
     padding: 0 16px;
     width: 100%;
@@ -516,9 +517,11 @@ img, svg { display: block; }
 @media (max-width: 768px) {
   .sidebar {
     transform: translateX(-100%);
+    left: -100%; /* Fallback in case framer-motion overrides transform */
   }
   .sidebar.mobile-open {
     transform: translateX(0);
+    left: 0;
   }
 }
 
