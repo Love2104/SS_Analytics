@@ -1,10 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   LayoutDashboard, PieChart, FileText, Activity,
-  Settings, User, ChevronLeft, ChevronRight, Search
+  Settings, User, ChevronLeft, ChevronRight, Search, X
 } from "lucide-react";
 
 const NAV_ITEMS = [
@@ -28,6 +28,15 @@ interface SidebarProps {
 
 export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, mobileOpen = false, onCloseMobile }: SidebarProps) {
   const [collapsed, setCollapsed] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 768px)");
+    setIsMobile(mq.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
   useEffect(() => {
     const stored = localStorage.getItem("sidebar-collapsed");
@@ -55,13 +64,18 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
 
   const isVisuallyCollapsed = collapsed && !mobileOpen;
 
+  // On mobile: slide sidebar completely off-screen when closed, slide in when open
+  // On desktop: show at full or collapsed width, always at x=0
+  const sidebarWidth = isMobile ? 280 : (isVisuallyCollapsed ? 64 : 240);
+  const sidebarX = isMobile && !mobileOpen ? -300 : 0;
+
   return (
     <>
       {/* Mobile overlay */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="backdrop-overlay md:hidden"
+            className="backdrop-overlay"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -72,11 +86,10 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
 
       <motion.aside
         className={`sidebar${isVisuallyCollapsed ? " collapsed" : ""}${mobileOpen ? " mobile-open" : ""}`}
-        style={{ width: mobileOpen ? "280px" : (isVisuallyCollapsed ? "var(--sidebar-collapsed-w)" : "var(--sidebar-w)") }}
-        animate={{ width: mobileOpen ? 280 : (isVisuallyCollapsed ? 64 : 240) }}
+        animate={{ width: sidebarWidth, x: sidebarX }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
       >
-        {/* Logo */}
+        {/* Logo + Close button */}
         <div className="flex items-center gap-3 h-16 px-4 border-b border-[rgba(127,86,217,0.08)] shrink-0">
           <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-[8px] bg-[#7F56D9]">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -89,17 +102,27 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
             className="text-[15px] font-semibold text-[#101828] whitespace-nowrap tracking-tight"
             animate={{ opacity: isVisuallyCollapsed ? 0 : 1, width: isVisuallyCollapsed ? 0 : "auto" }}
             transition={{ duration: 0.15 }}
-            style={{ overflow: 'hidden' }}
+            style={{ overflow: 'hidden', flex: 1 }}
           >
             Spring Street
           </motion.span>
+          {/* Mobile close button */}
+          {mobileOpen && (
+            <button
+              onClick={() => onCloseMobile?.()}
+              className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-[rgba(127,86,217,0.12)] text-[#667085] hover:bg-[rgba(127,86,217,0.06)] transition-colors"
+              aria-label="Close menu"
+            >
+              <X size={16} />
+            </button>
+          )}
         </div>
 
         {/* Mobile Profile Header */}
         {mobileOpen && (
-          <div style={{ padding: "0 16px 16px", borderBottom: "1px solid var(--border-subtle)", marginBottom: 16 }}>
+          <div style={{ padding: "12px 16px 16px", borderBottom: "1px solid var(--border-subtle)", marginBottom: 8 }}>
             <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--accent-cyan)", display: "flex", alignItems: "center", justifyContent: "center", color: "#000", fontWeight: "bold" }}>
+              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "linear-gradient(135deg, #7F56D9, #9E77ED)", display: "flex", alignItems: "center", justifyContent: "center", color: "#fff", fontWeight: "bold", fontSize: 14 }}>
                 JD
               </div>
               <div>
@@ -132,6 +155,7 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
                     if (mobileOpen) onCloseMobile?.();
                   } else {
                     onNavigate(item.id);
+                    if (mobileOpen) onCloseMobile?.();
                   }
                 }}
                 title={isVisuallyCollapsed ? item.label : undefined}
@@ -197,7 +221,10 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
             return (
               <button
                 key={item.id}
-                onClick={() => onNavigate(item.id)}
+                onClick={() => {
+                  onNavigate(item.id);
+                  if (mobileOpen) onCloseMobile?.();
+                }}
                 title={isVisuallyCollapsed ? item.label : undefined}
                 aria-label={item.label}
                 style={{
@@ -207,8 +234,8 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
                   height: 36,
                   padding: "0 12px",
                   margin: "0 12px 4px 12px",
-                  backgroundColor: isActive ? "rgba(255, 255, 255, 0.08)" : "transparent",
-                  color: isActive ? "#FFFFFF" : "var(--text-secondary)",
+                  backgroundColor: isActive ? "rgba(127,86,217,0.08)" : "transparent",
+                  color: isActive ? "#7F56D9" : "var(--text-secondary)",
                   borderRadius: 6,
                   fontSize: 13.5,
                   fontWeight: isActive ? 500 : 400,
@@ -246,7 +273,7 @@ export function Sidebar({ activeSection, onNavigate, onSearchOpen, onCollapse, m
           })}
         </nav>
 
-        {/* Footer / Collapse button */}
+        {/* Footer / Collapse button (desktop only) */}
         <div className="sidebar-footer hidden-on-mobile">
           <button
             className="sidebar-collapse-btn"

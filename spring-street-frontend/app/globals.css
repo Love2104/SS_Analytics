@@ -510,19 +510,8 @@ img, svg { display: block; }
   background: rgba(255,255,255,0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  transition: width 280ms var(--ease-out), transform 280ms var(--ease-out);
+  transition: width 280ms var(--ease-out);
   overflow: hidden;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-    left: -100%; /* Fallback in case framer-motion overrides transform */
-  }
-  .sidebar.mobile-open {
-    transform: translateX(0);
-    left: 0;
-  }
 }
 
 .sidebar.collapsed {
