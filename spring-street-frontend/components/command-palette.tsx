@@ -30,6 +30,11 @@ export function CommandPalette({ open, onClose, onNavigate, onTheme }: CommandPa
   const inputRef = useRef<HTMLInputElement>(null);
 
   const allItems: CmdItem[] = [
+    { id: "stock-aapl", label: "Apple Inc. (AAPL)", description: "View AAPL analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-AAPL"); onClose(); } },
+    { id: "stock-msft", label: "Microsoft Corp. (MSFT)", description: "View MSFT analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-MSFT"); onClose(); } },
+    { id: "stock-nvda", label: "NVIDIA Corp. (NVDA)", description: "View NVDA analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-NVDA"); onClose(); } },
+    { id: "stock-googl", label: "Alphabet Inc. (GOOGL)", description: "View GOOGL analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-GOOGL"); onClose(); } },
+    { id: "stock-amzn", label: "Amazon.com Inc. (AMZN)", description: "View AMZN analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-AMZN"); onClose(); } },
     { id: "nav-dashboard", label: "Go to Dashboard", icon: LayoutDashboard, group: "Navigate", action: () => { onNavigate("dashboard"); onClose(); } },
     { id: "nav-portfolio", label: "Go to Portfolio", icon: PieChart, group: "Navigate", action: () => { onNavigate("portfolio"); onClose(); } },
     { id: "nav-market", label: "Market Insights", icon: TrendingUp, group: "Navigate", action: () => { onNavigate("market"); onClose(); } },
@@ -39,11 +44,6 @@ export function CommandPalette({ open, onClose, onNavigate, onTheme }: CommandPa
     { id: "theme-dark", label: "Switch to Dark Mode", icon: Moon, group: "Theme", action: () => { onTheme("dark"); onClose(); } },
     { id: "theme-light", label: "Switch to Light Mode", icon: Sun, group: "Theme", action: () => { onTheme("light"); onClose(); } },
     { id: "theme-system", label: "Use System Theme", icon: Monitor, group: "Theme", action: () => { onTheme("system"); onClose(); } },
-    { id: "stock-aapl", label: "Apple Inc. (AAPL)", description: "View AAPL analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-AAPL"); onClose(); } },
-    { id: "stock-msft", label: "Microsoft Corp. (MSFT)", description: "View MSFT analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-MSFT"); onClose(); } },
-    { id: "stock-nvda", label: "NVIDIA Corp. (NVDA)", description: "View NVDA analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-NVDA"); onClose(); } },
-    { id: "stock-googl", label: "Alphabet Inc. (GOOGL)", description: "View GOOGL analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-GOOGL"); onClose(); } },
-    { id: "stock-amzn", label: "Amazon.com Inc. (AMZN)", description: "View AMZN analysis", icon: Hash, group: "Stocks", action: () => { onNavigate("company-AMZN"); onClose(); } },
   ];
 
   const filtered = query

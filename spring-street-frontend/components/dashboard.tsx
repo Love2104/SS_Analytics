@@ -279,8 +279,6 @@ function DashboardContent() {
         onNavigate={handleNavigate}
         onSearch={() => setCmdOpen(true)}
       />
-      
-      <FAB onClick={() => setCmdOpen(true)} />
 
       <CommandPalette
         open={cmdOpen}

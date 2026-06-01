@@ -1,6 +1,6 @@
 "use client";
 
-import { LayoutDashboard, PieChart, FileText, Search } from "lucide-react";
+import { LayoutDashboard, PieChart, FileText, Activity } from "lucide-react";
 
 interface BottomNavProps {
   activeSection: string;
@@ -31,12 +31,12 @@ export function BottomNav({ activeSection, onNavigate, onSearch }: BottomNavProp
         </button>
 
         <button
-          className="bottom-nav-item"
-          onClick={onSearch}
-          aria-label="Search"
+          className={`bottom-nav-item${activeSection === "activity" ? " active" : ""}`}
+          onClick={() => onNavigate("activity")}
+          aria-label="Activity"
         >
-          <Search size={20} strokeWidth={1.8} />
-          <span>Search</span>
+          <Activity size={20} strokeWidth={activeSection === "activity" ? 2.5 : 1.8} />
+          <span>Activity</span>
         </button>
 
         <button

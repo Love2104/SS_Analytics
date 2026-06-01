@@ -235,7 +235,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
         </nav>
 
         {/* Footer / Collapse button */}
-        <div className="sidebar-footer">
+        <div className="sidebar-footer hidden-on-mobile">
           <button
             className="sidebar-collapse-btn"
             onClick={toggle}
