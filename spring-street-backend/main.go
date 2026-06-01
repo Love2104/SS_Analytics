@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
@@ -30,8 +31,13 @@ func main() {
 		api.GET("/metrics", handlers.GetMetrics)
 	}
 
-	log.Println("Spring Street backend listening on :8080")
-	if err := router.Run(":8080"); err != nil {
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+
+	log.Printf("Spring Street backend listening on :%s\n", port)
+	if err := router.Run(":" + port); err != nil {
 		log.Fatalf("server failed: %v", err)
 	}
 }
