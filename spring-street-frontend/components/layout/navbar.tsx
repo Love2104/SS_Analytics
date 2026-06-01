@@ -173,14 +173,14 @@ export function Navbar({ sidebarCollapsed, onSearchOpen, lastUpdated, onNavigate
       {/* Right actions */}
       <div className="navbar-right">
         {lastUpdated && (
-          <span style={{ fontSize: 11, color: "var(--text-tertiary)", fontFamily: "var(--font-mono)", display: "flex", alignItems: "center", gap: 5 }}>
+          <span className="hidden-on-mobile" style={{ fontSize: 11, color: "var(--text-tertiary)", fontFamily: "var(--font-mono)", display: "flex", alignItems: "center", gap: 5 }}>
             <RefreshCw size={11} />
             {new Date(lastUpdated).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })}
           </span>
         )}
 
         {/* Notifications */}
-        <div style={{ position: "relative" }}>
+        <div className="hidden-on-mobile" style={{ position: "relative" }}>
           <button
             className="navbar-icon-btn"
             aria-label="Notifications"
@@ -232,11 +232,13 @@ export function Navbar({ sidebarCollapsed, onSearchOpen, lastUpdated, onNavigate
           {notifOpen && <div style={{ position: "fixed", inset: 0, zIndex: 999 }} onClick={() => setNotifOpen(false)} />}
         </div>
 
-        <ThemeToggle />
+        <div className="hidden-on-mobile">
+          <ThemeToggle />
+        </div>
 
         {/* Profile */}
         <button
-          className="profile-avatar"
+          className="profile-avatar hidden-on-mobile"
           aria-label="User profile menu"
           aria-haspopup="true"
           onClick={() => onNavigate("profile")}

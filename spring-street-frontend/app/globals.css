@@ -151,6 +151,8 @@ body {
 }
 
 @media (max-width: 768px) {
+  .hidden-on-mobile { display: none !important; }
+  
   .two-col-grid {
     grid-template-columns: 1fr;
   }
@@ -161,6 +163,14 @@ body {
   grid-template-columns: minmax(0, 1.85fr) minmax(0, 0.65fr);
   gap: 16px;
   align-items: start;
+}
+
+.chart-scroll-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
 }
 
 @media (max-width: 900px) {
@@ -722,6 +732,106 @@ img, svg { display: block; }
 
 .card-pad { padding: 20px; }
 .card-pad-lg { padding: 28px; }
+
+@media (max-width: 768px) {
+  .card-pad { padding: 16px; }
+  .card-pad-lg { padding: 20px; }
+}
+
+/* ============================================================
+   MOBILE UX PRIMITIVES
+   ============================================================ */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 64px;
+  background: rgba(13, 17, 23, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border-subtle);
+  display: none;
+  z-index: 100;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+
+.bottom-nav-inner {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+  padding: 0 8px;
+}
+
+.bottom-nav-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-width: 64px;
+  height: 100%;
+  color: var(--text-secondary);
+  font-size: 10px;
+  font-weight: 500;
+  border: none;
+  background: transparent;
+  transition: color 0.2s;
+  cursor: pointer;
+}
+
+.bottom-nav-item.active {
+  color: var(--accent-cyan);
+}
+
+.fab {
+  position: fixed;
+  bottom: 84px;
+  right: 16px;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  color: #000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 212, 255, 0.3);
+  z-index: 90;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.fab:active {
+  transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+  .bottom-nav, .fab {
+    display: flex;
+  }
+}
+
+.skeleton-pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.backdrop-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 140;
+  overscroll-behavior: contain;
+}
 
 /* ============================================================
    SECTION PRIMITIVES
@@ -1619,19 +1729,19 @@ img, svg { display: block; }
 /* ============================================================
    SKELETON LOADING
    ============================================================ */
-@keyframes shimmer {
-  0%   { background-position: -800px 0; }
-  100% { background-position: 800px 0; }
+@keyframes skeleton-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
 
 .skeleton {
   border-radius: var(--radius-md);
-  background: linear-gradient(90deg,
-    var(--surface-3) 25%,
-    var(--surface-hover) 50%,
-    var(--surface-3) 75%);
-  background-size: 800px 100%;
-  animation: shimmer 1.8s ease-in-out infinite;
+  background: var(--surface-3);
+  animation: skeleton-pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
 }
 
 /* ============================================================

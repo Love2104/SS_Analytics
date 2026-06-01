@@ -39,6 +39,15 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
     onCollapse?.(next);
   };
 
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => { document.body.style.overflow = ""; };
+  }, [mobileOpen]);
+
   const mainItems = NAV_ITEMS.filter((i) => !i.section);
   const moreItems = NAV_ITEMS.filter((i) => i.section === "more");
 
@@ -48,8 +57,7 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-150 bg-black/60 backdrop-blur-sm md:hidden"
-            style={{ zIndex: 150 }}
+            className="backdrop-overlay md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -60,8 +68,8 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
 
       <motion.aside
         className={`sidebar${collapsed ? " collapsed" : ""}${mobileOpen ? " mobile-open" : ""}`}
-        style={{ width: collapsed ? "var(--sidebar-collapsed-w)" : "var(--sidebar-w)" }}
-        animate={{ width: collapsed ? 64 : 240 }}
+        style={{ width: mobileOpen ? "280px" : (collapsed ? "var(--sidebar-collapsed-w)" : "var(--sidebar-w)") }}
+        animate={{ width: mobileOpen ? 280 : (collapsed ? 64 : 240) }}
         transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}
       >
         {/* Logo */}
@@ -81,6 +89,21 @@ export function Sidebar({ activeSection, onNavigate, onCollapse, mobileOpen = fa
             Spring Street
           </motion.span>
         </div>
+
+        {/* Mobile Profile Header */}
+        {mobileOpen && (
+          <div style={{ padding: "0 16px 16px", borderBottom: "1px solid var(--border-subtle)", marginBottom: 16 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+              <div style={{ width: 40, height: 40, borderRadius: "50%", background: "var(--accent-cyan)", display: "flex", alignItems: "center", justifyContent: "center", color: "#000", fontWeight: "bold" }}>
+                JD
+              </div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 600, color: "var(--text-primary)" }}>John Doe</div>
+                <div style={{ fontSize: 12, color: "var(--text-secondary)" }}>Pro Member</div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Navigation */}
         <nav className="sidebar-nav" aria-label="Main navigation">

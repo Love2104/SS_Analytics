@@ -5,6 +5,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { ThemeProvider, useTheme } from "@/components/providers/theme-provider";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Navbar } from "@/components/layout/navbar";
+import { BottomNav } from "@/components/layout/bottom-nav";
+import { FAB } from "@/components/layout/fab";
 import { CommandPalette } from "@/components/command-palette";
 import { ScrollProgress } from "@/components/scroll-progress";
 import { SkeletonDashboard } from "@/components/skeleton";
@@ -270,6 +272,15 @@ function DashboardContent() {
           </AnimatePresence>
         </main>
       </div>
+
+      {/* Mobile UX Elements */}
+      <BottomNav
+        activeSection={activeSection}
+        onNavigate={handleNavigate}
+        onSearch={() => setCmdOpen(true)}
+      />
+      
+      <FAB onClick={() => setCmdOpen(true)} />
 
       <CommandPalette
         open={cmdOpen}

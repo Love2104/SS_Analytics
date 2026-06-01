@@ -106,53 +106,57 @@ export function PortfolioGrowth({ analytics, insight, timeframe, setTimeframe }:
             </div>
           </div>
 
-          <ResponsiveContainer width="100%" height={400}>
-            <AreaChart data={analytics.growth} margin={{ top: 10, right: 8, bottom: 0, left: 8 }}>
-              <defs>
-                <linearGradient id="portfolioGradient" x1="0" x2="0" y1="0" y2="1">
-                  <stop offset="0%" stopColor="#00d4ff" stopOpacity={0.22} />
-                  <stop offset="100%" stopColor="#00d4ff" stopOpacity={0} />
-                </linearGradient>
-              </defs>
-              <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
-              <XAxis
-                dataKey="date"
-                tick={{ fill: "var(--chart-tick)", fontSize: 10, fontFamily: "var(--font-mono)" }}
-                minTickGap={60}
-                tickLine={false}
-                axisLine={false}
-              />
-              <YAxis
-                tick={{ fill: "var(--chart-tick)", fontSize: 10, fontFamily: "var(--font-mono)" }}
-                tickFormatter={compactCurrency}
-                width={72}
-                tickLine={false}
-                axisLine={false}
-                domain={[minVal * 0.97, maxVal * 1.02]}
-              />
-              <Tooltip content={<CustomTooltip />} />
-              <Area
-                dataKey="portfolio"
-                name="Portfolio"
-                stroke="#00d4ff"
-                strokeWidth={2.5}
-                fill="url(#portfolioGradient)"
-                dot={false}
-                activeDot={{ r: 5, fill: "#00d4ff", stroke: "#000", strokeWidth: 2 }}
-                animationDuration={900}
-              />
-              <Area
-                dataKey="baseline"
-                name="Initial Capital"
-                stroke="#f59e0b"
-                strokeWidth={1.5}
-                strokeDasharray="6 4"
-                fill="transparent"
-                dot={false}
-                activeDot={{ r: 4, fill: "#f59e0b", stroke: "var(--bg-base)", strokeWidth: 2 }}
-              />
-            </AreaChart>
-          </ResponsiveContainer>
+          <div className="chart-scroll-wrap">
+            <div style={{ minWidth: 600 }}>
+              <ResponsiveContainer width="100%" height={400}>
+                <AreaChart data={analytics.growth} margin={{ top: 10, right: 8, bottom: 0, left: 8 }}>
+                  <defs>
+                    <linearGradient id="portfolioGradient" x1="0" x2="0" y1="0" y2="1">
+                      <stop offset="0%" stopColor="#00d4ff" stopOpacity={0.22} />
+                      <stop offset="100%" stopColor="#00d4ff" stopOpacity={0} />
+                    </linearGradient>
+                  </defs>
+                  <CartesianGrid strokeDasharray="4 4" stroke="var(--chart-grid)" vertical={false} />
+                  <XAxis
+                    dataKey="date"
+                    tick={{ fill: "var(--chart-tick)", fontSize: 10, fontFamily: "var(--font-mono)" }}
+                    minTickGap={60}
+                    tickLine={false}
+                    axisLine={false}
+                  />
+                  <YAxis
+                    tick={{ fill: "var(--chart-tick)", fontSize: 10, fontFamily: "var(--font-mono)" }}
+                    tickFormatter={compactCurrency}
+                    width={72}
+                    tickLine={false}
+                    axisLine={false}
+                    domain={[minVal * 0.97, maxVal * 1.02]}
+                  />
+                  <Tooltip content={<CustomTooltip />} />
+                  <Area
+                    dataKey="portfolio"
+                    name="Portfolio"
+                    stroke="#00d4ff"
+                    strokeWidth={2.5}
+                    fill="url(#portfolioGradient)"
+                    dot={false}
+                    activeDot={{ r: 5, fill: "#00d4ff", stroke: "#000", strokeWidth: 2 }}
+                    animationDuration={900}
+                  />
+                  <Area
+                    dataKey="baseline"
+                    name="Initial Capital"
+                    stroke="#f59e0b"
+                    strokeWidth={1.5}
+                    strokeDasharray="6 4"
+                    fill="transparent"
+                    dot={false}
+                    activeDot={{ r: 4, fill: "#f59e0b", stroke: "var(--bg-base)", strokeWidth: 2 }}
+                  />
+                </AreaChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
 
           <div style={{ marginTop: 24, display: "flex", justifyContent: "center" }}>
             <TimeframeSelector timeframe={timeframe} setTimeframe={setTimeframe} />
